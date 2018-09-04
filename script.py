@@ -1,6 +1,6 @@
 #Author:  Vipul Chhabra
-### Needs to add some validation, classes, check points
 
+#. number of . will decide indentation and collapse property 
 #over all logic is to maintain star numbers in a list and "." values in dictionary 
 #to buffer next and previous line for "+" and "-"
 import sys
@@ -15,6 +15,8 @@ line_buffer = {'len_linestart': 0, 'line': ''}
 for line in sys.stdin:
 	# print line
 	line_start = line.split(' ', 1)[0]
+	if not line.strip():	
+		continue
 	if '*' in line_start:
 		if line_buffer['line']!= '':
 			tabs = "\t"*line_buffer['len_linestart']
@@ -37,7 +39,7 @@ for line in sys.stdin:
 		new_line = line.replace(line_start, ".".join(str(e) for e in star_list[:len(line_start)]))		
 		sys.stdout.write(new_line)
 	
-	if '.' in line_start:
+	elif '.' in line_start:
 		# print "in .", len(line_start)
 		if  line_buffer['len_linestart'] == 0:
 			line_buffer['len_linestart'] = len(line_start)
@@ -54,7 +56,6 @@ for line in sys.stdin:
 
 			sys.stdout.write(new_line)
 
-	
-
-
-
+	elif line!='':
+		tabs = "\t"*(line_buffer['len_linestart']+1)
+		line_buffer['line'] += tabs + line
